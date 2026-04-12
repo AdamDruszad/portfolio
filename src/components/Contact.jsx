@@ -1,3 +1,5 @@
+import arrowIcon from '../assets/arrow_right.svg';
+
 function Contact() {
   return (
     <footer
@@ -17,14 +19,8 @@ function Contact() {
         >
           adambiro2008@gmail.com
         </a>
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=adambiro2008@gmail.com"
-          className="font-mono tracking-widest text-slate-600 hover:text-slate-500 break-all"
-        >
-          adambiro2008@gmail.com
-        </a>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4 mt-6 md:mt-0">
         <a
           className="bg-blue-400 hover:bg-blue-300 text-black text-lg flex items-center gap-1 font-mono font-bold rounded-xl py-2.5 px-4.5 hover:scale-105 cursor-pointer transition-all"
           href="https://github.com/AdamDruszad"
@@ -32,7 +28,7 @@ function Contact() {
           rel="noopener noreferrer"
         >
           GitHub
-          <img src="./src/assets/arrow_right.svg" alt="arrow" />
+          <img src={arrowIcon} alt="arrow" />
         </a>{" "}
         <a
           className="bg-transparent text-slate-500 border border-slate-500 text-lg flex items-center gap-1 font-mono font-bold rounded-xl py-2.5 px-5 hover:scale-105 cursor-pointer transition-all"

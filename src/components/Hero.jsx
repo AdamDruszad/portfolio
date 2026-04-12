@@ -1,13 +1,13 @@
 function Hero() {
   return (
-    <section className="w-full min-h-screen bg-slate-900 bg-[url('./assets/background.svg')] bg-cover bg-no-repeat px-6 md:px-16 flex flex-col justify-center">
+    <section className="w-full min-h-screen bg-slate-900 bg-[url('./assets/background.svg')] bg-cover bg-no-repeat pt-32 px-6 md:px-16 flex flex-col justify-center">
       <div className="flex items-center gap-2 mb-5">
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span className="text-emerald-400 font-bold tracking-widest text-sm uppercase">
           Open to work
         </span>
       </div>
-      <h1 className="text-slate-600 text-7xl md:text-7xl font-black uppercase mb-4">
+      <h1 className="text-slate-600 text-5xl md:text-7xl font-black uppercase mb-4">
         Hello
         <br />
         <span className="text-white">I'm Adam</span>
@@ -47,7 +47,7 @@ function Hero() {
           Blender
         </span>
       </div>
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
         <a href="#projects" className="flex items-center gap-1 text-black font-mono font-bold bg-blue-400 hover:bg-blue-300 rounded-lg px-5 py-2.5 active:scale-95 cursor-pointer transition-all">
           View Projects
           <img src="./src/assets/arrow_right.svg" alt="arrow" />
