@@ -1,6 +1,9 @@
 function Contact() {
   return (
-    <footer id="contact" className="bg-gray-950 w-full flex flex-col md:flex-row justify-between items-start md:items-end px-6 md:px-16 py-12 border-t border-slate-800">
+    <footer
+      id="contact"
+      className="bg-gray-950 w-full flex flex-col md:flex-row justify-between items-start md:items-end px-6 md:px-16 py-12 border-t border-slate-800"
+    >
       <div>
         <p className="font-mono font-black text-slate-600 text-lg tracking-widest uppercase mb-2">
           Contact
@@ -10,7 +13,13 @@ function Contact() {
         </h2>
         <a
           href="https://mail.google.com/mail/?view=cm&fs=1&to=adambiro2008@gmail.com"
-          className="font-mono tracking-widest text-slate-600 hover:text-slate-500"
+          className="font-mono tracking-widest text-slate-600 hover:text-slate-500 break-all"
+        >
+          adambiro2008@gmail.com
+        </a>
+        <a
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=adambiro2008@gmail.com"
+          className="font-mono tracking-widest text-slate-600 hover:text-slate-500 break-all"
         >
           adambiro2008@gmail.com
         </a>
