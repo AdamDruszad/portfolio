@@ -1,3 +1,5 @@
+import arrowIcon from "../assets/src/arrow_right.svg";
+
 function Hero() {
   return (
     <section className="w-full min-h-screen bg-slate-900 bg-[url('./assets/background.svg')] bg-cover bg-no-repeat pt-32 px-6 md:px-16 flex flex-col justify-center">
@@ -48,9 +50,12 @@ function Hero() {
         </span>
       </div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-        <a href="#projects" className="flex items-center gap-1 text-black font-mono font-bold bg-blue-400 hover:bg-blue-300 rounded-lg px-5 py-2.5 active:scale-95 cursor-pointer transition-all">
+        <a
+          href="#projects"
+          className="flex items-center gap-1 text-black font-mono font-bold bg-blue-400 hover:bg-blue-300 rounded-lg px-5 py-2.5 active:scale-95 cursor-pointer transition-all"
+        >
           View Projects
-          <img src="./src/assets/arrow_right.svg" alt="arrow" />
+          <img src={arrowIcon} alt="arrow" />
         </a>
         <a
           href="#contact"
