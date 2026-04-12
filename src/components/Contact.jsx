@@ -24,7 +24,7 @@ function Contact() {
           adambiro2008@gmail.com
         </a>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4 mt-6 md:mt-0">
         <a
           className="bg-blue-400 hover:bg-blue-300 text-black text-lg flex items-center gap-1 font-mono font-bold rounded-xl py-2.5 px-4.5 hover:scale-105 cursor-pointer transition-all"
           href="https://github.com/AdamDruszad"
