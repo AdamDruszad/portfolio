@@ -1,3 +1,5 @@
+import arrowIcon from '../assets/arrow_right.svg';
+
 function Contact() {
   return (
     <footer
@@ -32,7 +34,7 @@ function Contact() {
           rel="noopener noreferrer"
         >
           GitHub
-          <img src="./src/assets/arrow_right.svg" alt="arrow" />
+          <img src={arrowIcon} alt="arrow" />
         </a>{" "}
         <a
           className="bg-transparent text-slate-500 border border-slate-500 text-lg flex items-center gap-1 font-mono font-bold rounded-xl py-2.5 px-5 hover:scale-105 cursor-pointer transition-all"
