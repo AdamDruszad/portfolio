@@ -103,7 +103,7 @@ function ProjectCard({ title, description, tech, status, link }) {
         {description}
       </p>
 
-      <div className="flex items-center gap-3 mt-5">
+      <div className="flex flex-wrap items-center gap-3 mt-5">
         <span
           className={`${currentTechColor} px-3 py-1 rounded-full font-mono font-medium text-sm`}
         >
