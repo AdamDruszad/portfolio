@@ -1,4 +1,4 @@
-import arrowIcon from "../assets/src/arrow_right.svg";
+import arrowIcon from '../assets/arrow_right.svg';
 
 function Hero() {
   return (
