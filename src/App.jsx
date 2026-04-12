@@ -6,6 +6,8 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import About from "./components/About";
 
+import { Analytics } from "@vercel/analytics/react";
+
 function HomePage() {
   return (
     <>
@@ -26,6 +28,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
         </Routes>
+
+        <Analytics />
       </main>
     </Router>
   );
