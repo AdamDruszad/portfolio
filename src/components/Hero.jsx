@@ -7,7 +7,7 @@ function Hero() {
           Open to work
         </span>
       </div>
-      <h1 className="text-slate-600 text-7xl md:text-7xl font-black uppercase mb-4">
+      <h1 className="text-slate-600 text-5xl md:text-7xl font-black uppercase mb-4">
         Hello
         <br />
         <span className="text-white">I'm Adam</span>
@@ -47,7 +47,7 @@ function Hero() {
           Blender
         </span>
       </div>
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
         <a href="#projects" className="flex items-center gap-1 text-black font-mono font-bold bg-blue-400 hover:bg-blue-300 rounded-lg px-5 py-2.5 active:scale-95 cursor-pointer transition-all">
           View Projects
           <img src="./src/assets/arrow_right.svg" alt="arrow" />
