@@ -8,6 +8,8 @@ import About from "./components/About";
 
 import { Analytics } from "@vercel/analytics/react";
 
+import { ReactLenis } from "@studio-freight/react-lenis";
+
 function HomePage() {
   return (
     <>
@@ -21,16 +23,18 @@ function HomePage() {
 function App() {
   return (
     <Router>
-      <main className="bg-slate-900 min-h-screen relative">
-        <Navbar />
+      <ReactLenis root>
+        <main className="bg-slate-900 min-h-screen relative">
+          <Navbar />
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
 
-        <Analytics />
-      </main>
+          <Analytics />
+        </main>
+      </ReactLenis>
     </Router>
   );
 }
