@@ -8,6 +8,8 @@ import About from "./components/About";
 
 import { Analytics } from "@vercel/analytics/react";
 
+import { ReactLenis } from "lenis/react";
+
 function HomePage() {
   return (
     <>
@@ -21,6 +23,7 @@ function HomePage() {
 function App() {
   return (
     <Router>
+      <ReactLenis root options={{ lerp: 0.1, wheelMultiplier: 1.2 }}>
         <main className="bg-slate-900 min-h-screen relative">
           <Navbar />
 
@@ -31,6 +34,7 @@ function App() {
 
           <Analytics />
         </main>
+      </ReactLenis>
     </Router>
   );
 }
