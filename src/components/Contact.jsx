@@ -1,8 +1,9 @@
-import arrowIcon from '../assets/arrow_right.svg';
+import arrowIcon from "../assets/arrow_right.svg";
 
 function Contact() {
   return (
     <footer
+      data-aos="fade-up"
       id="contact"
       className="bg-gray-950 w-full flex flex-col md:flex-row justify-between items-start md:items-end px-6 md:px-16 py-12 border-t border-slate-800"
     >

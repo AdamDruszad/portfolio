@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 
 function About() {
   return (
-    <div className="min-h-screen bg-slate-900 pt-32 pb-20 px-6 md:px-16 flex justify-center">
+    <div
+      data-aos="fade-up"
+      className="min-h-screen bg-slate-900 pt-32 pb-20 px-6 md:px-16 flex justify-center"
+    >
       <div className="max-w-6xl w-full">
         <Link
           to="/"
@@ -53,8 +56,7 @@ function About() {
                   <span className="text-2xl">🎮</span> CS2 & GTA Online
                 </li>
                 <li className="flex items-center gap-4">
-                  <span className="text-2xl">🏋️</span> Gym &
-                  Football
+                  <span className="text-2xl">🏋️</span> Gym & Football
                 </li>
                 <li className="flex items-center gap-4">
                   <span className="text-2xl">🚗</span> BMW enthusiast (M4 & F30)

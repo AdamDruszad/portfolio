@@ -22,7 +22,7 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
+    <Router data-aos="fade-up">
       <ReactLenis root>
         <main className="bg-slate-900 min-h-screen relative">
           <Navbar />
