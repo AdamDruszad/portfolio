@@ -8,6 +8,8 @@ import About from "./components/About";
 
 import { Analytics } from "@vercel/analytics/react";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import { ReactLenis } from "lenis/react";
 
 function HomePage() {
@@ -33,6 +35,7 @@ function App() {
           </Routes>
 
           <Analytics />
+          <SpeedInsights/>
         </main>
       </ReactLenis>
     </Router>
