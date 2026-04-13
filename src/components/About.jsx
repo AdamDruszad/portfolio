@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 
 function About() {
   return (
-    <div
-      data-aos="fade-up"
-      className="min-h-screen bg-slate-900 pt-32 pb-20 px-6 md:px-16 flex justify-center"
-    >
+    <div className="min-h-screen bg-slate-900 pt-32 pb-20 px-6 md:px-16 flex justify-center">
       <div className="max-w-6xl w-full">
         <Link
           to="/"

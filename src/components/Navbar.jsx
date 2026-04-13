@@ -18,10 +18,7 @@ function Navbar() {
   };
 
   return (
-    <nav
-      data-aos="fade-up"
-      className="fixed top-0 bg-slate-900/80 backdrop-blur-sm w-full flex justify-between items-center px-6 md:px-16 py-8 z-50"
-    >
+    <nav className="fixed top-0 backdrop-blur-sm w-full flex justify-between items-center px-6 md:px-16 py-8 z-50">
       <div className="font-black text-5xl font-mono">
         <Link to="/">
           <span className="bg-linear-to-r from-emerald-400 to-blue-500 text-transparent bg-clip-text animate-pulse [animation-duration:3s]">

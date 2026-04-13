@@ -2,10 +2,7 @@ import arrowIcon from "../assets/arrow_right.svg";
 
 function Hero() {
   return (
-    <section
-      data-aos="fade-up"
-      className="w-full min-h-screen bg-slate-900 bg-[url('./assets/background.svg')] bg-cover bg-no-repeat pt-32 px-6 md:px-16 flex flex-col justify-center"
-    >
+    <section className="w-full min-h-screen bg-slate-900 bg-[url('./assets/background.svg')] bg-cover bg-no-repeat pt-32 px-6 md:px-16 flex flex-col justify-center">
       <div className="flex items-center gap-2 mb-5">
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span className="text-emerald-400 font-bold tracking-widest text-sm uppercase">
@@ -27,28 +24,28 @@ function Hero() {
         Blender.
       </p>
       <div className="flex flex-wrap gap-4 max-w-xl mb-7">
-        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
+        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
           Python
         </span>
-        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
+        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
           HTML
         </span>
-        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
+        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
           CSS/Tailwind
         </span>
-        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
+        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
           Javascript
         </span>
-        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
+        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
           React
         </span>
-        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
+        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
           SQL
         </span>
-        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
+        <span className="bg-amber-400 hover:bg-amber-300 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-amber-100 hover:ring-amber-400 transition-colors cursor-pointer">
           C++
         </span>
-        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5  font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
+        <span className="bg-emerald-500 hover:bg-emerald-400 text-black rounded-full px-4 py-1.5 font-semibold font-mono ring-2 ring-emerald-300 hover:ring-green-500 transition-colors cursor-pointer">
           Blender
         </span>
       </div>

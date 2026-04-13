@@ -92,7 +92,6 @@ function ProjectCard({ title, description, tech, status, link }) {
 
   return (
     <CardWrapper
-      data-aos="fade-up"
       href={hasLink ? link : undefined}
       target={hasLink ? "_blank" : undefined}
       rel={hasLink ? "noopener noreferrer" : undefined}
