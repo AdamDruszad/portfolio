@@ -15,7 +15,7 @@ function Hero() {
         <span className="text-white">I'm Adam</span>
       </h1>
       <p className="text-slate-400 font-medium text-xl md:text-2xl tracking-wide mb-6 font-mono">
-        CS STUDENT &nbsp;·&nbsp; JUNIOR BACKEND DEV &nbsp;·&nbsp; JUNIOR 3D
+        CS STUDENT &nbsp;·&nbsp; JUNIOR FULLSTACK DEV &nbsp;·&nbsp; JUNIOR 3D
         ARTIST
       </p>
       <p className="text-slate-400 text-base md:text-xl leading-relaxed max-w-xl mb-7 font-mono">
