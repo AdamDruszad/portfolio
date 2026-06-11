@@ -11,14 +11,14 @@ const projects = [
     description: "Frontend Mentor Project, and my first try of using JS",
     tech: "HTML, CSS, JS",
     status: "done",
-    link: "https://adamdruszad.github.io/BrowserExtensionManager/",
+    link: "https://github.com/AdamDruszad/BrowserExtensionManager",
   },
   {
     title: "Social Link Profiles ",
     description: "Frontend Mentor Project, an easy website",
     tech: "HTML, CSS",
     status: "done",
-    link: "https://adamdruszad.github.io/Social_Link_Profiles/#",
+    link: "https://github.com/AdamDruszad/Social_Link_Profiles",
   },
   {
     title: "Bouncing Ball in Terminal",
@@ -53,7 +53,7 @@ const projects = [
     description: "A wheater data query web application",
     tech: "HTML, CSS, JS",
     status: "done",
-    link: "https://adamdruszad.github.io/Weather-App/",
+    link: "https://github.com/AdamDruszad/Weather-App",
   },
   {
     title: "PC Optimizer",
