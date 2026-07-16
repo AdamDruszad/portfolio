@@ -67,7 +67,7 @@ const projects = [
     description: "A Blender project, for submission",
     tech: "Blender",
     status: "in progress",
-    link: "#",
+    link: "https://sketchfab.com/3d-models/m4--competition-8a10fc22e7a64e6197a4625728575ccd",
   },
 ];
 
