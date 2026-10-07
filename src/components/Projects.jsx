@@ -1,153 +1,35 @@
-const projects = [
-  {
-    title: "Learning scripts",
-    description: "My python scripts, from that day when I learned it",
-    tech: "Python",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Python-Mini",
-  },
-  {
-    title: "Browser Extension Manager ",
-    description: "Frontend Mentor Project, and my first try of using JS",
-    tech: "HTML, CSS, JS",
-    status: "done",
-    link: "https://github.com/AdamDruszad/BrowserExtensionManager",
-  },
-  {
-    title: "Social Link Profiles ",
-    description: "Frontend Mentor Project, an easy website",
-    tech: "HTML, CSS",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Social_Link_Profiles",
-  },
-  {
-    title: "Bouncing Ball in Terminal",
-    description: "A homework assignment, from my teacher",
-    tech: "C++",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Szorgalmik/blob/main/bouncing_ball.cpp",
-  },
-  {
-    title: "CPU Stress test",
-    description: "A homework assignment, from my teacher",
-    tech: "Python",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Szorgalmik/blob/main/cpu-stresstest.py",
-  },
-  {
-    title: "Weekly wake up routin",
-    description: "A homework assignment, from my teacher",
-    tech: "C++",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Szorgalmik/blob/main/ebredes.cpp",
-  },
-  {
-    title: "RAM Stress test",
-    description: "A homework assignment, from my teacher",
-    tech: "Python",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Szorgalmik/blob/main/ram-stresstest.py",
-  },
-  {
-    title: "Weather app",
-    description: "A wheater data query web application",
-    tech: "HTML, CSS, JS",
-    status: "done",
-    link: "https://github.com/AdamDruszad/Weather-App",
-  },
-  {
-    title: "PC Optimizer",
-    description: "Windows optimization app with GPU/CPU auto-detection",
-    tech: "Python",
-    status: "done",
-    link: "https://github.com/AdamDruszad/pc-optimizer",
-  },
-  {
-    title: "M4 Competition 3D modell",
-    description: "A Blender project, for submission",
-    tech: "Blender",
-    status: "done",
-    link: "https://sketchfab.com/3d-models/m4--competition-8a10fc22e7a64e6197a4625728575ccd",
-  },
-];
+import { projects } from "../data/projects";
 
-function ProjectCard({ title, description, tech, status, link }) {
-  const techColors = {
-    Python: "text-green-400 bg-green-400/10",
-    "C++": "text-purple-400 bg-purple-400/10",
-    Blender: "text-rose-400 bg-rose-400/10",
-  };
-
-  const currentTechColor = techColors[tech] || "text-blue-400 bg-blue-400/10";
-
-  const hasLink = link !== "#";
-
-  const CardWrapper = hasLink ? "a" : "div";
-
-  const cardStyles = `bg-slate-800 rounded-xl p-6 border transition-all ${
-    hasLink
-      ? "border-slate-600 hover:border-blue-400 active:scale-95 cursor-pointer"
-      : "border-slate-700 opacity-60 cursor-default"
-  }`;
-
+function ProjectCard({ project }) {
   return (
-    <CardWrapper
-      href={hasLink ? link : undefined}
-      target={hasLink ? "_blank" : undefined}
-      rel={hasLink ? "noopener noreferrer" : undefined}
-      className={cardStyles}
-    >
-      <h3 className="text-white text-xl font-mono mb-2 font-bold">{title}</h3>
-
-      <p className="font-mono font-medium text-sm text-slate-500 leading-relaxed">
-        {description}
-      </p>
-
-      <div className="flex flex-wrap items-center gap-3 mt-5">
-        <span
-          className={`${currentTechColor} px-3 py-1 rounded-full font-mono font-medium text-sm`}
-        >
-          {tech}
-        </span>
-
-        {status === "in progress" && (
-          <span className="text-yellow-300 bg-amber-700 px-4 py-2 rounded-full font-mono font-medium text-xs">
-            In Progress
-          </span>
+    <article className="bg-slate-800 rounded-xl p-6 border border-slate-600 flex flex-col min-w-0">
+      <h3 className="text-white text-xl font-mono mb-3 font-bold">{project.title}</h3>
+      <p className="font-mono text-sm text-slate-300 leading-relaxed">{project.description}</p>
+      <ul aria-label={`${project.title} technologies`} className="flex flex-wrap gap-2 my-5">
+        {project.tech.map((tech) => (
+          <li key={tech} className="text-blue-200 bg-blue-400/10 px-3 py-1 rounded-full font-mono text-xs">{tech}</li>
+        ))}
+      </ul>
+      <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-sm">
+        {project.demo && (
+          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4 py-2" aria-label={`Open ${project.title} live demo in a new tab`}>Live demo</a>
         )}
+        <a href={project.source} target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline underline-offset-4 py-2" aria-label={`View ${project.title} source on GitHub in a new tab`}>GitHub</a>
+        {project.demoNote && <span className="text-slate-300 text-xs">{project.demoNote}</span>}
       </div>
-    </CardWrapper>
+    </article>
   );
 }
 
-function Projects() {
+export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="bg-slate-900 px-6 py-20 min-h-screen md:px-16 border border-slate-800"
-    >
-      <h2 className="font-mono font-bold text-slate-600 text-lg tracking-widest uppercase mb-2">
-        Projects
-      </h2>
-
-      <h3 className="font-mono text-white text-4xl md:text-5xl font-black mb-12">
-        What I've built
-      </h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.title}
-            title={project.title}
-            description={project.description}
-            tech={project.tech}
-            status={project.status}
-            link={project.link}
-          />
-        ))}
+    <section id="projects" tabIndex={-1} className="bg-slate-900 px-6 py-20 md:px-16 border-y border-slate-800">
+      <p className="font-mono font-bold text-slate-400 text-sm tracking-widest uppercase mb-2">Selected projects</p>
+      <h2 className="font-mono text-white text-4xl md:text-5xl font-black mb-10">What I've built</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
       </div>
+      <a href="https://github.com/AdamDruszad?tab=repositories" target="_blank" rel="noopener noreferrer" className="inline-block mt-8 py-2 text-blue-300 underline underline-offset-4 font-mono">More projects and learning exercises on GitHub</a>
     </section>
   );
 }
-
-export default Projects;

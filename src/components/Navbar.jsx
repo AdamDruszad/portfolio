@@ -1,94 +1,54 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-function Navbar() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
+  const close = () => setIsOpen(false);
 
-  const scrollTo = (id) => {
-    setIsOpen(false);
-    if (window.location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const onPointerDown = (event) => {
+      if (!navRef.current?.contains(event.target)) setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isOpen]);
+
+  function links(mobile = false) {
+    const style = `block py-2 text-slate-300 hover:text-white transition-colors ${mobile ? "text-xl" : ""}`;
+    return (
+      <>
+        <li><Link to="/#projects" onClick={close} className={style}>Projects</Link></li>
+        <li><NavLink to="/about" onClick={close} className={style}>About</NavLink></li>
+        <li><Link to="/#contact" onClick={close} className={style}>Contact</Link></li>
+      </>
+    );
+  }
 
   return (
-    <nav className="fixed top-0 backdrop-blur-sm w-full flex justify-between items-center px-6 md:px-16 py-8 z-50">
-      <div className="font-black text-5xl font-mono">
-        <Link to="/">
-          <span className="bg-linear-to-r from-emerald-400 to-blue-500 text-transparent bg-clip-text animate-pulse [animation-duration:3s]">
-            A
-          </span>
-          <span className="text-white animate-pulse">/</span>
-          <span className="bg-linear-to-r from-emerald-400 to-blue-500 text-transparent bg-clip-text animate-pulse [animation-duration:2s]">
-            D
-          </span>
-        </Link>
-      </div>
-
-      <ul className="hidden md:flex gap-12 text-slate-400 font-mono text-xl font-semibold">
-        <button
-          onClick={() => scrollTo("projects")}
-          className="hover:text-white transition-colors"
-        >
-          Projects
-        </button>
-        <Link to="/about" className="hover:text-white transition-colors">
-          About
-        </Link>
-        <button
-          onClick={() => scrollTo("contact")}
-          className="hover:text-white transition-colors"
-        >
-          Contact
-        </button>
-      </ul>
-
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden flex flex-col gap-1.5 cursor-pointer"
-      >
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all ${isOpen ? "rotate-45 translate-y-2" : ""}`}
-        ></span>
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all ${isOpen ? "opacity-0" : ""}`}
-        ></span>
-        <span
-          className={`block w-6 h-0.5 bg-white transition-all ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
-        ></span>
+    <nav ref={navRef} aria-label="Main navigation" className="fixed top-0 bg-slate-900/95 backdrop-blur-sm w-full flex justify-between items-center px-6 md:px-16 py-5 z-50 border-b border-slate-800">
+      <Link to="/" onClick={close} aria-label="Adam Biró home" className="font-black text-4xl font-mono">
+        <span className="text-emerald-300">A</span><span className="text-white">/</span><span className="text-blue-300">D</span>
+      </Link>
+      <ul className="hidden md:flex gap-10 font-mono text-lg font-semibold">{links()}</ul>
+      <button ref={toggleRef} type="button" onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen} aria-controls="mobile-navigation" aria-label={isOpen ? "Close navigation" : "Open navigation"} className="md:hidden flex flex-col justify-center gap-1.5 cursor-pointer w-11 h-11 p-2">
+        <span aria-hidden="true" className={`block w-6 h-0.5 bg-white ${isOpen ? "rotate-45 translate-y-2" : ""}`} />
+        <span aria-hidden="true" className={`block w-6 h-0.5 bg-white ${isOpen ? "opacity-0" : ""}`} />
+        <span aria-hidden="true" className={`block w-6 h-0.5 bg-white ${isOpen ? "-rotate-45 -translate-y-2" : ""}`} />
       </button>
-
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-t border-slate-800 px-6 py-6 flex flex-col gap-6">
-          <button
-            onClick={() => scrollTo("projects")}
-            className="text-left text-slate-400 hover:text-white font-mono text-xl font-semibold transition-colors"
-          >
-            Projects
-          </button>
-          <Link
-            to="/about"
-            onClick={() => setIsOpen(false)}
-            className="text-slate-400 hover:text-white font-mono text-xl font-semibold transition-colors"
-          >
-            About
-          </Link>
-          <button
-            onClick={() => scrollTo("contact")}
-            className="text-left text-slate-400 hover:text-white font-mono text-xl font-semibold transition-colors"
-          >
-            Contact
-          </button>
-        </div>
-      )}
+      <ul id="mobile-navigation" hidden={!isOpen} className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-t border-slate-700 px-6 py-5 flex flex-col gap-3 font-mono font-semibold">{links(true)}</ul>
     </nav>
   );
 }
-
-export default Navbar;
