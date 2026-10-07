@@ -1,35 +1,49 @@
 import { projects } from "../data/projects";
+import Arrow from "./Arrow";
+import ProjectVisual from "./ProjectVisual";
 
-function ProjectCard({ project }) {
-  return (
-    <article className="bg-slate-800 rounded-xl p-6 border border-slate-600 flex flex-col min-w-0">
-      <h3 className="text-white text-xl font-mono mb-3 font-bold">{project.title}</h3>
-      <p className="font-mono text-sm text-slate-300 leading-relaxed">{project.description}</p>
-      <ul aria-label={`${project.title} technologies`} className="flex flex-wrap gap-2 my-5">
-        {project.tech.map((tech) => (
-          <li key={tech} className="text-blue-200 bg-blue-400/10 px-3 py-1 rounded-full font-mono text-xs">{tech}</li>
-        ))}
-      </ul>
-      <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-sm">
-        {project.demo && (
-          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-200 underline underline-offset-4 py-2" aria-label={`Open ${project.title} live demo in a new tab`}>Live demo</a>
-        )}
-        <a href={project.source} target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline underline-offset-4 py-2" aria-label={`View ${project.title} source on GitHub in a new tab`}>GitHub</a>
-        {project.demoNote && <span className="text-slate-300 text-xs">{project.demoNote}</span>}
-      </div>
-    </article>
-  );
+function ProjectLinks({ project }) {
+  return <div className="project-links">
+    {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-link" aria-label={`Open ${project.title} live demo in a new tab`}>Live demo <Arrow /></a>}
+    <a href={project.source} target="_blank" rel="noopener noreferrer" className="text-link project-source" aria-label={`View ${project.title} source on GitHub in a new tab`}>Source code <Arrow /></a>
+    {project.demoNote && <span className="demo-note">{project.demoNote}</span>}
+  </div>;
+}
+
+function Technologies({ project }) {
+  return <ul className="project-technologies" aria-label={`${project.title} technologies`}>{project.tech.map((tech) => <li key={tech}>{tech}</li>)}</ul>;
 }
 
 export default function Projects() {
+  const [featured, ...otherProjects] = projects;
+  const categories = { fitai: "Full-stack application", tts: "Browser-based tool", extensions: "Frontend development", gamebooster: "Desktop application", weather: "API & JavaScript" };
   return (
-    <section id="projects" tabIndex={-1} className="bg-slate-900 px-6 py-20 md:px-16 border-y border-slate-800">
-      <p className="font-mono font-bold text-slate-400 text-sm tracking-widest uppercase mb-2">Selected projects</p>
-      <h2 className="font-mono text-white text-4xl md:text-5xl font-black mb-10">What I've built</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
+    <section id="projects" tabIndex={-1} className="projects-section page-shell" aria-labelledby="projects-title">
+      <div className="section-heading">
+        <div><p className="eyebrow"><span className="section-index">01 /</span> Selected work</p><h2 id="projects-title">What I've <em>built.</em></h2></div>
+        <p>A few things I've turned from<br />“what if” into something you can use.</p>
       </div>
-      <a href="https://github.com/AdamDruszad?tab=repositories" target="_blank" rel="noopener noreferrer" className="inline-block mt-8 py-2 text-blue-300 underline underline-offset-4 font-mono">More projects and learning exercises on GitHub</a>
+      <article className="featured-project">
+        <div className="featured-project__copy">
+          <p className="eyebrow"><span className="project-number">01</span>{categories.fitai}</p>
+          <div><h3>{featured.title}<span className="project-title-dot">.</span></h3><p className="project-tagline">A smarter way<br />to show up.</p></div>
+          <p className="project-description">{featured.description}</p>
+          <Technologies project={featured} />
+          <ProjectLinks project={featured} />
+        </div>
+        <ProjectVisual kind="fitai" />
+      </article>
+      <div className="project-grid">{otherProjects.slice(0, 2).map((project, index) => <article className="project-story" key={project.id}>
+        <ProjectVisual kind={project.id} />
+        <div className="project-story__heading"><p className="eyebrow">{categories[project.id]}</p><span className="project-number">0{index + 2}</span></div>
+        <h3>{project.title}</h3><p className="project-description">{project.description}</p><Technologies project={project} /><ProjectLinks project={project} />
+      </article>)}</div>
+      <div className="more-projects"><p className="eyebrow">More experiments, same curiosity</p>{otherProjects.slice(2).map((project, index) => <article className="project-row" key={project.id}>
+        <span className="project-number">0{index + 4}</span><div className="project-row__title"><h3>{project.title}</h3><span>{categories[project.id]}</span></div><p className="project-description">{project.description}</p><ProjectLinks project={project} />
+        <Technologies project={project} />
+      </article>)}</div>
+      <a href="https://github.com/AdamDruszad?tab=repositories" target="_blank" rel="noopener noreferrer" className="all-projects-link">More projects and learning exercises on GitHub <Arrow /></a>
     </section>
   );
 }
+

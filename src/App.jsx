@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import About from "./components/About";
+import Intro from "./components/Intro";
+import Arrow from "./components/Arrow";
 
 function NavigationEffects() {
   const { pathname, hash, key } = useLocation();
@@ -27,10 +29,11 @@ function NavigationEffects() {
 }
 
 function NotFound() {
-  return <section className="pt-40 pb-20 px-6 md:px-16 min-h-[70vh] font-mono text-slate-300">
-    <h1 className="text-white text-4xl font-bold mb-5">Page not found</h1>
-    <p className="mb-6">That page does not exist. You can find my projects on the home page.</p>
-    <Link className="text-blue-300 underline underline-offset-4" to="/">Back to home</Link>
+  return <section className="not-found page-shell">
+    <p className="eyebrow">404 / A small detour</p>
+    <h1>Page not found</h1>
+    <p>That page does not exist. You can find my projects on the home page.</p>
+    <Link className="button button--dark" to="/">Back to home <Arrow /></Link>
   </section>;
 }
 
@@ -40,9 +43,9 @@ export default function App() {
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
       <NavigationEffects />
-      <main id="main-content" tabIndex={-1} className="bg-slate-900 min-h-screen">
+      <main id="main-content" tabIndex={-1}>
         <Routes>
-          <Route path="/" element={<><Hero /><Projects /></>} />
+          <Route path="/" element={<><Hero /><Projects /><Intro /></>} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

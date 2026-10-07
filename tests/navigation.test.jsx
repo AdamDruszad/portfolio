@@ -8,6 +8,7 @@ vi.mock("@vercel/speed-insights/react", () => ({ SpeedInsights: () => null }));
 let container, root;
 
 beforeEach(() => {
+  localStorage.clear();
   container = document.createElement("div");
   document.body.append(container);
   root = createRoot(container);
@@ -34,7 +35,7 @@ describe("portfolio navigation", () => {
     expect(window.location.pathname).toBe("/");
     expect(window.location.hash).toBe("#projects");
     expect(document.activeElement.id).toBe("projects");
-    expect(container.querySelector("#projects h2").textContent).toBe("What I've built");
+    expect(container.querySelector("#projects h2").textContent).toBe("What I've built.");
   });
 
   it("Escape closes mobile navigation and returns focus to its toggle", async () => {
@@ -73,5 +74,29 @@ describe("portfolio navigation", () => {
     await click(container.querySelector('main a[href="/"]'));
     expect(window.location.pathname).toBe("/");
     expect(container.querySelector("#projects")).not.toBeNull();
+  });
+
+  it("remembers the selected theme across routes and remounts", async () => {
+    await render("/");
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    await click(container.querySelector('button[aria-label="Switch to light mode"]'));
+    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(localStorage.getItem("portfolio-theme")).toBe("light");
+    await click(navLink("About"));
+    expect(document.documentElement.dataset.theme).toBe("light");
+    await act(async () => root.unmount());
+    root = createRoot(container);
+    await render("/");
+    expect(document.documentElement.dataset.theme).toBe("light");
+    await click(container.querySelector('button[aria-label="Switch to dark mode"]'));
+    expect(document.documentElement.dataset.theme).toBe("dark");
+  });
+
+  it("dismisses the mobile menu when clicking outside navigation", async () => {
+    await render("/");
+    const toggle = container.querySelector('button[aria-controls="mobile-navigation"]');
+    await click(toggle);
+    await act(async () => container.querySelector("main").dispatchEvent(new Event("pointerdown", { bubbles: true })));
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
   });
 });
