@@ -1,70 +1,27 @@
 import { Link } from "react-router-dom";
+import Arrow from "./Arrow";
+import BrandVisual from "./BrandVisual";
 
-function About() {
+export default function About() {
   return (
-    <div className="min-h-screen bg-slate-900 pt-32 pb-20 px-6 md:px-16 flex justify-center">
-      <div className="max-w-6xl w-full">
-        <Link
-          to="/"
-          className="text-blue-400 hover:text-blue-300 font-mono text-sm mb-8 inline-flex items-center gap-2 transition-colors"
-        >
-          <span>&larr;</span> Back to Home
-        </Link>
-
-        <h1 className="font-mono text-white text-4xl md:text-6xl font-black mb-12 uppercase">
-          About Me
-        </h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 flex flex-col gap-6 font-mono text-slate-400 text-base md:text-lg leading-relaxed">
-            <p>
-              I'm Adam, a first-year Computer Science student at the University
-              of Debrecen. I started programming with a simple goal: solve real
-              problems.
-            </p>
-            <p>
-              My first serious project was GameBooster — a Python app I built to
-              optimize Windows performance on my own machine. It taught me more
-              than any tutorial could. Right now I'm expanding into web
-              development and 3D modeling in Blender. I'm not just learning
-              tools — I'm learning how to think like an engineer.
-            </p>
-            <p className="text-white font-semibold mt-4">
-              I'm looking for a remote opportunity where I can contribute, grow
-              fast, and work alongside people who take their craft seriously.
-            </p>
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="bg-slate-800 rounded-xl p-8 border border-slate-700 sticky top-32">
-              <h3 className="text-white font-bold font-mono text-xl mb-6">
-                Fast Facts
-              </h3>
-
-              <ul className="flex flex-col gap-5 text-slate-400 font-mono text-sm">
-                <li className="flex items-center gap-4">
-                  <span className="text-2xl">📍</span> Based in Transcarpathia,
-                  Ukraine
-                </li>
-                <li className="flex items-center gap-4">
-                  <span className="text-2xl">🎓</span> CS @ Uni of Debrecen
-                </li>
-                <li className="flex items-center gap-4">
-                  <span className="text-2xl">🎮</span> CS2 & GTA Online
-                </li>
-                <li className="flex items-center gap-4">
-                  <span className="text-2xl">🏋️</span> Gym & Football
-                </li>
-                <li className="flex items-center gap-4">
-                  <span className="text-2xl">🚗</span> BMW enthusiast (M4 & F30)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section className="about-section page-shell" aria-labelledby="about-title">
+      <Link to="/" className="text-link back-link"><Arrow direction="left" /> Back to home</Link>
+      <div className="section-heading"><div><p className="eyebrow">A little introduction</p><h1 id="about-title">About <em>me</em></h1></div><p>Developer. Student.<br />A work in progress, in the best way.</p></div>
+      <div className="about-grid"><BrandVisual compact /><div className="about-story">
+        <p className="about-lead">Curiosity brought me here.<br /><em>Building keeps me going.</em></p>
+        <p>I'm Adam, a second-year Computer Science student at the University of Debrecen, where I started my BSc in 2025.</p>
+        <p>I build web applications with React, JavaScript and Tailwind CSS. In FitAI, I connected a React interface to a FastAPI and PostgreSQL backend for workout planning, logging and AI coach chat.</p>
+        <p>My smaller projects explore browser APIs, responsive layouts and interactive interfaces. I also built GameBooster, a Python desktop app with hardware detection and configurable profiles.</p>
+        <Link to="/#projects" className="text-link">Take a look at my work <Arrow /></Link>
+      </div></div>
+      <aside aria-label="Education and skills" className="about-details"><h2>A little more <em>context.</em></h2><dl>
+        <div><dt>01 / Based in</dt><dd>Debrecen, Hungary</dd></div>
+        <div><dt>02 / Education</dt><dd>BSc Computer Science<span>University of Debrecen · 2025 – present</span></dd></div>
+        <div><dt>03 / Training</dt><dd>Linux Essentials<span>Cisco Networking Academy · 2025</span></dd></div>
+        <div><dt>04 / Languages</dt><dd>Hungarian <span>Native</span><br />English <span>Intermediate</span><br />Ukrainian <span>Basic</span></dd></div>
+      </dl></aside>
+      <div className="about-opportunity"><span className="status-dot" /><p>I'm looking for part-time remote frontend work where I can contribute to a product and develop my skills in a team.</p><Link to="/#contact" className="text-link">Let's connect <Arrow /></Link></div>
+    </section>
   );
 }
 
-export default About;
