@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import staticPages from './scripts/static-pages.js'
 
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(),   // ← ez az új sor
+    tailwindcss(),
+    staticPages(),
   ],
 })

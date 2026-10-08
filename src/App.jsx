@@ -9,11 +9,12 @@ import Contact from "./components/Contact";
 import About from "./components/About";
 import Intro from "./components/Intro";
 import Arrow from "./components/Arrow";
+import { updatePageMetadata } from "./utils/pageMetadata";
 
 function NavigationEffects() {
   const { pathname, hash, key } = useLocation();
   useEffect(() => {
-    document.title = `${pathname === "/about" ? "About | " : pathname === "/" ? "" : "Page not found | "}Biró Ádám — Frontend Developer`;
+    updatePageMetadata(pathname);
     let anchor = "";
     try { anchor = decodeURIComponent(hash.slice(1)); } catch { /* An invalid hash falls back to the page start. */ }
     const target = anchor ? document.getElementById(anchor) : null;
@@ -46,7 +47,7 @@ export default function App() {
       <main id="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<><Hero /><Projects /><Intro /></>} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" caseSensitive element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
