@@ -4,21 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#181c17" />
     <script>
       try {
         const savedTheme = localStorage.getItem("portfolio-theme");
-        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+        const theme = savedTheme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = theme === "light" ? "#f5f4ef" : "#181c17";
       } catch {}
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <meta name="theme-color" content="#f5f4ef" />
-    <title>Biró Ádám — Frontend Developer</title>
-    <meta name="description" content="Second-year Computer Science student at the University of Debrecen. React and JavaScript projects, Python backends and part-time remote availability." />
-    <meta property="og:title" content="Biró Ádám — Frontend Developer" />
-    <meta property="og:description" content="Explore my React and JavaScript projects, including FitAI, a text-to-speech app and responsive UI challenges." />
-    <meta property="og:type" content="website" />
   </head>
   <body>
     <div id="root"></div>

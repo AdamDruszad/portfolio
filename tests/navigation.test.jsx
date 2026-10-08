@@ -68,6 +68,16 @@ describe("portfolio navigation", () => {
     expect(container.querySelector('#contact a[href^="mailto:"]')).not.toBeNull();
   });
 
+  it("Back to top scrolls the current route instead of navigating home", async () => {
+    await render("/about");
+    expect(container.querySelector("h1").textContent).toBe("About me");
+    await click(container.querySelector(".back-to-top"));
+    expect(window.location.pathname).toBe("/about");
+    expect(window.location.hash).toBe("#main-content");
+    expect(document.activeElement.id).toBe("main-content");
+    expect(container.querySelector("h1").textContent).toBe("About me");
+  });
+
   it("unknown routes provide a working route back home", async () => {
     await render("/does-not-exist");
     expect(container.querySelector("h1").textContent).toBe("Page not found");
@@ -98,5 +108,34 @@ describe("portfolio navigation", () => {
     await click(toggle);
     await act(async () => container.querySelector("main").dispatchEvent(new Event("pointerdown", { bubbles: true })));
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("updates descriptions and canonical URLs when navigating, without duplicate tags", async () => {
+    await render("/about");
+    expect(document.querySelector('meta[name="description"]').content).toContain("Meet Ádám Biró");
+    expect(document.querySelector('link[rel="canonical"]').href).toMatch(/\/about$/);
+    await click(navLink("Projects"));
+    expect(document.querySelector('link[rel="canonical"]').href).toBe("https://portfolio-orpin-eight-240etcohnd.vercel.app/");
+    expect(document.querySelector('meta[property="og:title"]').content).toBe(document.title);
+    expect(document.querySelectorAll('meta[name="description"]')).toHaveLength(1);
+  });
+
+  it("marks missing pages noindex and restores indexability after returning home", async () => {
+    await render("/missing-page");
+    expect(document.querySelector('meta[name="robots"]').content).toBe("noindex, follow");
+    expect(document.querySelector('link[rel="canonical"]')).toBeNull();
+    await click(container.querySelector('main a[href="/"]'));
+    expect(document.querySelector('meta[name="robots"]').content).toBe("index, follow");
+    expect(document.querySelector('link[rel="canonical"]')).not.toBeNull();
+  });
+
+  it("still changes theme when browser storage is blocked", async () => {
+    const read = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => { throw new Error("Storage blocked"); });
+    const write = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new Error("Storage blocked"); });
+    try {
+      await render("/");
+      await click(container.querySelector('button[aria-label="Switch to light mode"]'));
+      expect(document.documentElement.dataset.theme).toBe("light");
+    } finally { read.mockRestore(); write.mockRestore(); }
   });
 });
