@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Documentation is prose, not markup: keep it out of the utility scan so edits to
+   docs/*.md can never change the shipped stylesheet. */
+@source not "../docs";
+
 /* Shared foundations: warm paper, ink, and a single citrus accent. */
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
