@@ -29,6 +29,12 @@ export function metadataTags(pathname) {
     { tag: "meta", attrs: { property: "og:title", content: page.title } },
     { tag: "meta", attrs: { property: "og:description", content: page.description } },
     { tag: "meta", attrs: { property: "og:type", content: "website" } },
+    { tag: "meta", attrs: { property: "og:site_name", content: "Ádám Biró" } },
+    { tag: "meta", attrs: { property: "og:image", content: `${siteUrl}/og-image.png` } },
+    { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
+    { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
+    { tag: "meta", attrs: { property: "og:image:alt", content: "Ideas into interfaces. Ádám Biró, frontend developer, open to part-time remote work." } },
+    { tag: "meta", attrs: { name: "twitter:card", content: "summary_large_image" } },
     ...(page.canonical ? [
       { tag: "link", attrs: { rel: "canonical", href: page.canonical } },
       { tag: "meta", attrs: { property: "og:url", content: page.canonical } },

@@ -14,6 +14,14 @@ describe("static route metadata", () => {
     expect(page.querySelector("#root")).not.toBeNull();
   });
 
+  it("does not duplicate sharing tags when rebuilding an entry that already has them", () => {
+    const built = withMetadata(entry, "/");
+    const page = new DOMParser().parseFromString(withMetadata(built, "/about"), "text/html");
+    expect(page.querySelectorAll('meta[name="twitter:card"]')).toHaveLength(1);
+    expect(page.querySelectorAll('meta[property="og:image"]')).toHaveLength(1);
+    expect(page.querySelector('meta[property="og:image"]').content).toMatch(/\/og-image\.png$/);
+  });
+
   it("removes home canonical and index directives from the static error page", () => {
     const page = new DOMParser().parseFromString(withMetadata(entry, "/missing"), "text/html");
     expect(page.title).toContain("Page not found");

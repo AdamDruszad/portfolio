@@ -14,7 +14,7 @@ function serializeTags(pathname) {
 export function withMetadata(html, pathname) {
   const withoutMetadata = html
     .replace(/<title>[^<]*<\/title>\s*/g, "")
-    .replace(/<meta\s+(?:name="(?:description|robots)"|property="og:[^"]+")[^>]*>\s*/g, "")
+    .replace(/<meta\s+(?:name="(?:description|robots|twitter:[^"]+)"|property="og:[^"]+")[^>]*>\s*/g, "")
     .replace(/<link\s+rel="canonical"[^>]*>\s*/g, "");
   return withoutMetadata.replace("</head>", `    ${serializeTags(pathname)}\n  </head>`);
 }

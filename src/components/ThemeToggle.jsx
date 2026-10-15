@@ -1,22 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+const STORAGE_KEY = "portfolio-theme";
+const THEME_COLORS = { light: "#f4f1e8", dark: "#121318" };
+const darkQuery = () => window.matchMedia?.("(prefers-color-scheme: dark)");
+
+function savedTheme() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "light" || saved === "dark") return saved;
+  } catch { /* The toggle still works when browser storage is unavailable. */ }
+  return null;
+}
+
+// Without a saved choice the site follows the operating system, like the bootstrap
+// script in index.html; an explicit toggle is remembered and wins from then on.
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState(() => {
-    try {
-      const saved = localStorage.getItem("portfolio-theme");
-      if (saved === "light" || saved === "dark") return saved;
-    } catch { /* The toggle still works when browser storage is unavailable. */ }
-    return "dark";
-  });
+  const explicit = useRef(savedTheme() !== null);
+  const [theme, setTheme] = useState(() => savedTheme() ?? (darkQuery()?.matches ? "dark" : "light"));
+
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#181c17" : "#f5f4ef");
-    try { localStorage.setItem("portfolio-theme", theme); } catch { /* Storage is optional. */ }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEME_COLORS[theme]);
   }, [theme]);
+
+  useEffect(() => {
+    const media = darkQuery();
+    if (!media?.addEventListener) return undefined;
+    const onChange = (event) => { if (!explicit.current) setTheme(event.matches ? "dark" : "light"); };
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
+  function toggle() {
+    const next = theme === "dark" ? "light" : "dark";
+    explicit.current = true;
+    setTheme(next);
+    try { localStorage.setItem(STORAGE_KEY, next); } catch { /* Storage is optional. */ }
+  }
+
   const label = `Switch to ${theme === "dark" ? "light" : "dark"} mode`;
-  return <button className="theme-toggle" type="button" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={label} title={label}>
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {theme === "dark" ? <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></> : <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" />}
-    </svg>
-  </button>;
+  return (
+    <button className="theme-toggle" type="button" onClick={toggle} aria-label={label} title={label}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.25" stroke="currentColor" strokeWidth="1.5" />
+        <path className="theme-toggle__half" d="M12 3.75a8.25 8.25 0 0 1 0 16.5Z" fill="currentColor" />
+      </svg>
+    </button>
+  );
 }

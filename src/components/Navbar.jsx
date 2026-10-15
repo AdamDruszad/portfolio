@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { mailto } from "../data/profile";
 import Arrow from "./Arrow";
 import ThemeToggle from "./ThemeToggle";
+import Wordmark from "./Wordmark";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,26 +35,43 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
-  function links() {
-    return <>
-      <li><Link to="/#projects" onClick={close} aria-current={pathname === "/" && hash === "#projects" ? "location" : undefined}>Projects</Link></li>
-      <li><NavLink to="/about" onClick={close}>About</NavLink></li>
-      <li><Link to="/#contact" onClick={close} aria-current={hash === "#contact" ? "location" : undefined}>Contact</Link></li>
-    </>;
-  }
+  const links = (
+    <>
+      <li>
+        <Link to="/#projects" onClick={close} aria-current={pathname === "/" && hash === "#projects" ? "location" : undefined}>Projects</Link>
+      </li>
+      <li>
+        <NavLink to="/about" onClick={close}>About</NavLink>
+      </li>
+      <li>
+        <Link to="/#contact" onClick={close} aria-current={hash === "#contact" ? "location" : undefined}>Contact</Link>
+      </li>
+    </>
+  );
 
   return (
     <header className="site-header">
-      <nav ref={navRef} aria-label="Main navigation" className="navbar page-shell">
-        <Link to="/" onClick={close} aria-label="Adam Biró home" className="wordmark">a<span>/</span>d<span className="wordmark-dot">.</span></Link>
-        <ul className="desktop-navigation">{links()}</ul>
-        <div className="nav-actions"><ThemeToggle /><a className="nav-contact" href="mailto:adambiro2008@gmail.com">Let's talk <Arrow /></a></div>
-        <button ref={toggleRef} type="button" onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen} aria-controls="mobile-navigation" aria-label={isOpen ? "Close navigation" : "Open navigation"} className="menu-toggle">
-          <span>{isOpen ? "Close" : "Menu"}</span><span className={`menu-icon${isOpen ? " is-open" : ""}`} aria-hidden="true"><i /><i /></span>
-        </button>
-        <ul id="mobile-navigation" hidden={!isOpen} className="mobile-navigation">{links()}</ul>
+      <nav ref={navRef} aria-label="Main navigation" className="navbar shell">
+        <Wordmark onClick={close} />
+        <ul className="nav-links">{links}</ul>
+        <div className="nav-actions">
+          <ThemeToggle />
+          <a className="button button--small nav-contact" href={mailto}>Let's talk <Arrow /></a>
+          <button
+            ref={toggleRef}
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
+            aria-label={isOpen ? "Close navigation" : "Open navigation"}
+            className="menu-toggle"
+          >
+            <span>{isOpen ? "Close" : "Menu"}</span>
+            <span className={`menu-icon${isOpen ? " is-open" : ""}`} aria-hidden="true"><i /><i /></span>
+          </button>
+        </div>
+        <ul id="mobile-navigation" hidden={!isOpen} className="mobile-nav">{links}</ul>
       </nav>
     </header>
   );
 }
-
