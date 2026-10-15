@@ -88,18 +88,48 @@ describe("portfolio navigation", () => {
 
   it("remembers the selected theme across routes and remounts", async () => {
     await render("/");
+    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(localStorage.getItem("portfolio-theme")).toBeNull();
+    await click(container.querySelector('button[aria-label="Switch to dark mode"]'));
     expect(document.documentElement.dataset.theme).toBe("dark");
-    await click(container.querySelector('button[aria-label="Switch to light mode"]'));
-    expect(document.documentElement.dataset.theme).toBe("light");
-    expect(localStorage.getItem("portfolio-theme")).toBe("light");
+    expect(localStorage.getItem("portfolio-theme")).toBe("dark");
     await click(navLink("About"));
-    expect(document.documentElement.dataset.theme).toBe("light");
+    expect(document.documentElement.dataset.theme).toBe("dark");
     await act(async () => root.unmount());
     root = createRoot(container);
     await render("/");
-    expect(document.documentElement.dataset.theme).toBe("light");
-    await click(container.querySelector('button[aria-label="Switch to dark mode"]'));
     expect(document.documentElement.dataset.theme).toBe("dark");
+    await click(container.querySelector('button[aria-label="Switch to light mode"]'));
+    expect(document.documentElement.dataset.theme).toBe("light");
+  });
+
+  it("follows the operating-system theme until the visitor picks one", async () => {
+    const media = vi.spyOn(window, "matchMedia").mockImplementation((query) => ({
+      matches: query.includes("dark"), media: query, addEventListener: vi.fn(), removeEventListener: vi.fn(),
+    }));
+    try {
+      await render("/");
+      expect(document.documentElement.dataset.theme).toBe("dark");
+      expect(localStorage.getItem("portfolio-theme")).toBeNull();
+    } finally { media.mockRestore(); }
+  });
+
+  it("numbers the contact section only on the home page", async () => {
+    await render("/");
+    expect(container.querySelector("#contact .note").textContent).toBe("03 / Have something in mind?");
+    await click(navLink("About"));
+    expect(container.querySelector("#contact .note").textContent).toBe("Have something in mind?");
+  });
+
+  it("copies the email address and announces the result", async () => {
+    const writeText = vi.fn(() => Promise.resolve());
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    try {
+      await render("/");
+      await click(container.querySelector("#contact .copy-button"));
+      expect(writeText).toHaveBeenCalledWith("adambiro2008@gmail.com");
+      expect(container.querySelector('#contact [role="status"]').textContent).toBe("Email address copied");
+    } finally { delete navigator.clipboard; }
   });
 
   it("dismisses the mobile menu when clicking outside navigation", async () => {
@@ -134,8 +164,8 @@ describe("portfolio navigation", () => {
     const write = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new Error("Storage blocked"); });
     try {
       await render("/");
-      await click(container.querySelector('button[aria-label="Switch to light mode"]'));
-      expect(document.documentElement.dataset.theme).toBe("light");
+      await click(container.querySelector('button[aria-label="Switch to dark mode"]'));
+      expect(document.documentElement.dataset.theme).toBe("dark");
     } finally { read.mockRestore(); write.mockRestore(); }
   });
 });

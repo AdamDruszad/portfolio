@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import About from "./components/About";
 import Intro from "./components/Intro";
 import Arrow from "./components/Arrow";
+import { Note } from "./components/ui";
 import { updatePageMetadata } from "./utils/pageMetadata";
 
 function NavigationEffects() {
@@ -30,12 +31,14 @@ function NavigationEffects() {
 }
 
 function NotFound() {
-  return <section className="not-found page-shell">
-    <p className="eyebrow">404 / A small detour</p>
-    <h1>Page not found</h1>
-    <p>That page does not exist. You can find my projects on the home page.</p>
-    <Link className="button button--dark" to="/">Back to home <Arrow /></Link>
-  </section>;
+  return (
+    <section className="not-found shell" aria-labelledby="not-found-title">
+      <Note>404 / A small detour</Note>
+      <h1 id="not-found-title">Page not found</h1>
+      <p>That page does not exist. You can find my projects on the home page.</p>
+      <Link className="button" to="/">Back to home <Arrow /></Link>
+    </section>
+  );
 }
 
 export default function App() {
