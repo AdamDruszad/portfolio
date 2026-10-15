@@ -155,3 +155,12 @@ states exist beyond the ones below.
   generated, and `vercel.json` is byte-identical to the baseline.
 - **Not exercised by a script**: the resize-to-desktop menu close (G7, code unchanged) and the `<noscript>` message
   (S7, markup unchanged).
+
+## 10. Changes after the first deployment (2026-10-15)
+
+| Item | Change | Status |
+|---|---|---|
+| P2, P4, P6, P9, P10 | Descriptions and stacks updated from each project's README (facts only) | ✅ |
+| P3, P5, P7 | Illustrations replaced by real screenshots with descriptive alt text; captions updated (FitAI keeps its "sample data" note) | ✅ |
+| P9, P10 | GameBooster and Weather rows gained screenshot thumbnails | ✅ |
+| C2–C4 | Contact heading, arrow and email fit 320 px phones | ✅ |

@@ -127,3 +127,48 @@ the graphite text token: 6.3:1 light and 6.8:1 dark.
 - **Role in the title.** `src/data/site.js:3` says "Full-Stack Developer"; the hero, JSON-LD and README say frontend. Pick one; the title feeds every search result and the sitemap entries.
 - **CSP.** `vercel.json` sets only `base-uri`, `object-src` and `frame-ancestors`. A `script-src`/`style-src` policy would need the inline theme bootstrap and the JSON-LD hashed, or moved to files, and then testing against Vercel Analytics.
 - **Font budget.** If the 117 kB of fonts matters more than optical sizing, swap `bricolage-grotesque-latin.woff2` for Fontsource's `wght` file (41 kB).
+
+---
+
+## Follow-up after the first preview deployment (2026-10-15)
+
+The owner reported problems on the deployed previews. Re-checked on the live Vercel preview
+(`portfolio-gu9guclzb…vercel.app`) and locally, with a stricter layout sweep at 12 widths
+(320–1920 px). That sweep catches off-screen elements, clipped text and overlapping text, not
+just page overflow.
+
+### Bugs found and fixed (`a32798a`)
+| Bug | Cause | Fix |
+|---|---|---|
+| Page 16–55 px wider than 320–360 px phones, so mobile browsers zoomed the whole page out | Contact heading "conversation." (275 px at 48 px) plus the 56 px arrow in a 280 px column | Own heading scale for the contact section; the arrow wraps below the heading when space runs out |
+| Hero "interfaces." 284 px wide in a 280 px column at 320 px | Mobile minimum of the hero type step was too large | Mobile size derived from the viewport; desktop value unchanged |
+| Email broke mid-word ("…gmail.c / om") at 320 px | 22 px email text plus arrow exceeded the column | Fluid size that keeps it on one line from 320 px |
+| Hero footnote and footer credit squeezed into narrow columns on phones | Side-by-side layout at every width | Stack on phones; side by side from 480 / 640 px |
+| TTS illustration: title collided with the player card at 320 px | Illustration height reduced for mobile | Superseded: the illustrations were replaced by real screenshots (below) |
+
+Not a bug: the console's "404" on unknown routes is the intended HTTP 404 status of `404.html`.
+
+### Project pictures and information refreshed
+- The hand-built mock-ups showed the **old** designs. They were replaced by real screenshots of
+  each app (`public/projects/*.webp`, 800 and 1600 px wide, 14–86 kB each, lazy-loaded with
+  `srcset`, explicit dimensions and descriptive alt text). FitAI also shows its phone layout.
+  GameBooster and Weather, previously text-only rows, now have thumbnails.
+- Sources: FitAI from current `main` (mocked API, sample data); Text to Speech, Extension Manager
+  and Weather from their `redesign` branches (speech stubbed, Weather API mocked); GameBooster from
+  the screenshot in its repository. Captions say where data is sample data.
+- Descriptions and stacks were rewritten from each project's README: FitAI's plan review, coach
+  context and offline-safe logging (+ Claude API, PWA); the TTS cue lamp and voice fallback; Extension
+  Manager's Undo and system theme; GameBooster's reversible tweaks and live monitoring; Weather's
+  colour-coded conditions and serverless key proxy.
+- **Dependency:** Text to Speech, Extension Manager and Weather are pictured as their `redesign`
+  branches. Their live demos show the new design only after those branches are merged and deployed.
+  Weather additionally needs `OPENWEATHER_API_KEY` set in Vercel.
+
+### Verification
+- Layout sweep at 320, 360, 390, 414, 600, 768, 834, 900, 1024, 1280, 1440 and 1920 px on `/`, `/about`
+  and an unknown route, light and dark: no overflow, off-screen, clipped or overlapping text.
+- All 6 project images load after scrolling at 390 px @3x, 768 @2x, 1440 @1x and @2x; `srcset` picks
+  the 800 or 1600 px file appropriately; every image has alt text and width/height.
+- 0 visible text under 12 px and 0 contrast failures on every route, width and theme.
+- 18/18 unit tests, 26/26 browser interaction checks, lint clean, build ok
+  (CSS 7.91 kB gzip, down from 8.78 kB after removing the illustration styles).
