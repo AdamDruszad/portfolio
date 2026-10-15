@@ -92,7 +92,8 @@
   --step-3: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem);
   --step-4: clamp(2.375rem, 1.7rem + 2.9vw, 4.25rem);
   --step-5: clamp(3rem, 1.9rem + 4.6vw, 6rem);
-  --step-hero: clamp(4rem, 1rem + 6vw, 6.5rem);
+  /* Mobile: sized so "interfaces.✳" fits a 280px column at 320px. Desktop value below. */
+  --step-hero: clamp(3.25rem, 0.6rem + 14.5vw, 6.5rem);
 
   /* Space */
   --space-3xs: 0.25rem;
@@ -429,7 +430,7 @@ main::before, .contact::before {
 .hero-lede { max-width: 32ch; margin: var(--space-m) 0 0; color: var(--graphite); font-size: var(--step-1); line-height: 1.55; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs) var(--space-m); margin-top: var(--space-l); }
 
-.hero-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-m); padding-block: var(--space-l) var(--space-m); }
+.hero-foot { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2xs); padding-block: var(--space-l) var(--space-m); }
 .hero-place { margin: 0; font-size: 0.9375rem; line-height: 1.5; font-weight: 500; }
 .hero-place span { display: block; color: var(--graphite); font-weight: 400; }
 .scroll-link { display: inline-flex; align-items: center; gap: var(--space-2xs); min-height: 2.75rem; color: var(--graphite); font: 500 var(--step--1) / 1.4 var(--font-mono); white-space: nowrap; transition: color var(--duration) ease; }
@@ -656,8 +657,9 @@ main::before, .contact::before {
    ------------------------------------------------------------------------------------ */
 .contact { padding-top: var(--space-section); border-top: 1px solid var(--rule); }
 .contact-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2xs) var(--space-m); }
-.contact-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-m); padding-block: var(--space-l); }
-.contact-heading h2 { font-size: var(--step-5); font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+/* The arrow may wrap below the heading on narrow phones rather than push past the edge. */
+.contact-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-m); padding-block: var(--space-l); }
+.contact-heading h2 { font-size: clamp(2.5rem, 0.9rem + 8vw, 6rem); font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
 .contact-arrow {
   display: grid;
   place-items: center;
@@ -679,7 +681,7 @@ main::before, .contact::before {
   align-items: center;
   gap: var(--space-xs);
   min-height: 2.75rem;
-  font-size: var(--step-2);
+  font-size: clamp(1.1875rem, 0.55rem + 3.4vw, 1.75rem);
   font-weight: 550;
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
@@ -708,6 +710,7 @@ main::before, .contact::before {
 .footer-bottom {
   display: grid;
   grid-template-columns: auto 1fr;
+  grid-template-areas: "mark top" "credit credit" "social social";
   align-items: center;
   gap: var(--space-s) var(--space-m);
   padding-block: var(--space-m);
@@ -716,13 +719,14 @@ main::before, .contact::before {
   position: relative;
   background: var(--paper);
 }
-.footer-credit { margin: 0; justify-self: end; text-align: right; font: 500 var(--step--2) / 1.6 var(--font-mono); color: var(--graphite); }
+.footer-bottom > .wordmark { grid-area: mark; }
+.footer-credit { grid-area: credit; margin: 0; font: 500 var(--step--2) / 1.6 var(--font-mono); color: var(--graphite); }
 .footer-credit span { display: block; }
-.social-links { display: flex; gap: var(--space-m); }
+.social-links { grid-area: social; display: flex; gap: var(--space-m); }
 .social-links a, .back-to-top { display: inline-flex; align-items: center; gap: var(--space-3xs); min-height: 2.75rem; font-weight: 500; font-size: 0.9375rem; transition: color var(--duration) ease; }
 .social-links a:hover, .back-to-top:hover { color: var(--pen); }
 .social-links .arrow, .back-to-top .arrow { width: 1em; height: 1em; }
-.back-to-top { justify-self: end; color: var(--graphite); }
+.back-to-top { grid-area: top; justify-self: end; color: var(--graphite); }
 
 /* ------------------------------------------------------------------------------------
    About and not-found pages
@@ -774,11 +778,14 @@ main::before, .contact::before {
   .project-visual--fitai { padding-inline: 2rem; }
 }
 
+@media (min-width: 480px) {
+  .hero-foot { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: var(--space-m); }
+}
+
 @media (min-width: 640px) {
   .about-details dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-arrow { width: 5rem; height: 5rem; }
-  .footer-bottom { grid-template-columns: auto 1fr auto auto; }
-  .footer-credit { justify-self: start; text-align: left; }
+  .footer-bottom { grid-template-columns: auto 1fr auto auto; grid-template-areas: "mark credit social top"; }
   .social-links { justify-self: end; }
 }
 
@@ -792,6 +799,7 @@ main::before, .contact::before {
 
 /* The notebook margin appears once there is room for it. */
 @media (min-width: 900px) {
+  :root { --step-hero: clamp(4rem, 1rem + 6vw, 6.5rem); }
   main::before, .contact::before { display: block; }
   .navbar { display: grid; grid-template-columns: var(--margin-col) 1fr auto; column-gap: var(--margin-gap); }
 
