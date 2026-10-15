@@ -81,6 +81,7 @@
   --marker: rgb(242 212 74 / 0.85);
   --marker-solid: #f2d44a;
   --hard-shadow: #1b1c20;
+  --paper-glass: rgb(244 241 232 / 0.92);
 
   /* Type: a fluid scale, nothing visible below 12px */
   --step--2: 0.75rem;
@@ -138,6 +139,7 @@
   --on-pen: #121318;
   --marker: rgb(242 212 74 / 0.34);
   --hard-shadow: #05060a;
+  --paper-glass: rgb(18 19 24 / 0.92);
 }
 
 /* ------------------------------------------------------------------------------------
@@ -240,7 +242,8 @@ main::before, .contact::before {
   color: var(--graphite);
 }
 .note-index { color: var(--pen); font-family: var(--font-mono); font-weight: 600; }
-.note-sep { color: var(--rule-strong); padding-inline: 0.15em; }
+/* Separators are text, so they keep text contrast (graphite), not rule contrast. */
+.note-sep { color: var(--graphite); padding-inline: 0.15em; }
 
 .status {
   display: flex;
@@ -326,7 +329,7 @@ main::before, .contact::before {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  background: color-mix(in oklab, var(--paper) 92%, transparent);
+  background: var(--paper-glass);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--rule);
@@ -499,7 +502,7 @@ main::before, .contact::before {
   font: 500 var(--step--1) / 1.6 var(--font-mono);
   color: var(--ink);
 }
-.entry-stack li:not(:last-child)::after { content: "/"; color: var(--rule-strong); padding-inline: 0.6em; }
+.entry-stack li:not(:last-child)::after { content: "/"; color: var(--graphite); padding-inline: 0.6em; }
 .entry-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-m); }
 .entry-source { color: var(--ink); }
 .entry-source:hover { color: var(--pen); }

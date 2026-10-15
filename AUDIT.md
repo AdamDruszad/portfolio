@@ -66,3 +66,64 @@ the site reads like a well-kept engineering notebook.
 - **Layout:** a left margin column on desktop carries the annotations (section numbers, categories, availability), the way notes sit in a notebook margin. On mobile the notes move inline above each heading. Projects are numbered entries with a spec line (stack) and their links.
 - **Hero artwork:** the clip-art is redrawn as a "sketch → interface" figure (a dashed wireframe becomes a finished card) that literally illustrates "Ideas into interfaces". It keeps the original captions.
 - **Motion:** highlighter strokes draw in once, cards lift 2px on hover, and press states compress slightly. Everything is disabled under `prefers-reduced-motion`.
+
+---
+
+## After the redesign — verification (2026-10-15)
+
+Measured with the same scripts, routes, widths and themes as the baseline.
+Screenshots: `docs/redesign-screenshots/after/{light,dark}-{home,about,does-not-exist}-{390,1440}.png`
+(the baseline's unprefixed files are the dark default; `light-*` are its light theme).
+
+| Check | Before | After |
+|---|---|---|
+| Tests / lint / build / `npm audit` | 13 / clean / ok / 0 | **18** / clean / ok / 0 |
+| Browser interaction checks (real Edge) | — | **26/26** (`.claude/tools/portfolio-interactions.mjs`) |
+| **Visible text under 12px** (home, 390 / 1440) | **58% / 49%** | **0% / 0%** (every route, both themes) |
+| Smallest visible text | 8px | 12px (figure captions, footer credit) |
+| Body copy size | 12–15px | 16–17px fluid |
+| Contrast failures | 0 | 0 (after fixing a separator regression, see below) |
+| Targets under 24px | 0 | 0 |
+| Horizontal overflow | 0 | 0 |
+| First Tab reaches the skip link | **no** (focus started inside `<main>`) | yes |
+| Page height, home at 390 / 1440 | 5,348 / 3,900 px | 5,933 / 4,364 px |
+| JS (gzip) | 81.68 kB | 82.42 kB |
+| CSS (gzip) | 8.30 kB | 8.78 kB |
+| Fonts per visit (latin subsets) | 47 kB, no preload | 117 kB, display face preloaded |
+| Social preview image / structured data | none / none | 1200×630 PNG (74 kB) / Person JSON-LD |
+| JSX lines over 200 characters | 17 (max 626) | 2 (both are prose paragraphs in About.jsx) |
+
+## Scores — after
+
+| Area | Before | After | Evidence |
+|---|---|---|---|
+| Visual design & consistency | 6 | **8** | One token system (index.css `:root` / `[data-theme="dark"]`) drives both themes; no inverted slabs in light mode. The identity is specific to the content ("lab notebook": margin notes, highlighter, numbered entries, sketch-to-interface hero). Remaining: the project figures are still hand-built miniature mock-ups, not real screenshots of the projects. |
+| UX & navigation | 7 | **8** | Copy-email fallback, route-aware section numbering, the first Tab reaches the skip link, and the theme respects the OS. The header nav aligns with the content column. Remaining: the duplicate mailto pair and "Scroll to discover" were kept because they are in the inventory contract. |
+| Responsiveness / mobile | 7 | **8** | Mobile-first stylesheet with six breakpoints instead of desktop-first pixel overrides; 0 px overflow at 390 and 1440; nothing under 12px. Remaining: the mobile home page is 11% taller (5,933 px) because body text grew from 12–13px to 16–17px. Contact is one tap away from the menu. |
+| Accessibility | 7 | **9** | 0% sub-12px text, 0 contrast failures in both themes, and a focus ring on every tab stop. First-load focus is fixed (App.jsx `NavigationEffects`). Figure disclaimers are real `<figcaption>`s, the copy result is announced via `role="status"`, and reduced motion is honoured (verified). Remaining: decorative text inside the `aria-hidden` illustrations is still miniature. |
+| Performance | 7 | **7** | JS and CSS are essentially unchanged (+0.7 kB / +0.5 kB gzip), and the display font is now preloaded, so the headline no longer repaints late. The trade-off is font weight, about 2.5× (117 kB): Bricolage's optical-size axis plus a real monospace. Switching to Bricolage's weight-only file would save about 36 kB at some cost to small-size rendering. |
+| Code quality & structure | 6 | **8** | Content lives in `src/data/` (projects with category, tagline and caption; profile with email, socials and skills), with shared primitives in `components/ui.jsx`. The email literal appears once in `src` (plus the static `noscript` and JSON-LD in index.html). Readable JSX; tests cover the new behaviour. Remaining: Tailwind still contributes only the reset and `@theme` tokens, and no utilities are used. The stylesheet is longer (864 formatted lines) but token-driven. |
+| SEO basics | 7 | **9** | Adds `og:image` + dimensions + alt, `og:site_name`, `twitter:card`, and Person JSON-LD (verified to parse). The static builder no longer duplicates sharing tags (new test). Remaining: the title/hero role mismatch (owner decision, below) and client-rendered body content. |
+| Security red flags | 8 | **8** | No change to `vercel.json`, no new third parties, and every new-tab link is `noopener noreferrer` (12 checked). The JSON-LD repeats the already-public email address. |
+
+### Regression caught during verification
+The first after-measurement found the "/" separators at 1.97:1 (light) and 2.13:1 (dark). The new
+design had coloured them with the rule token, undoing a fix from the 2026-10-08 audit. They now use
+the graphite text token: 6.3:1 light and 6.8:1 dark.
+
+## Biggest improvements
+1. Readability: no visible text under 12px (from about half of all text), with 16–17px body copy.
+2. A distinct, content-specific identity instead of a template look, consistent across both themes.
+3. Keyboard users land on the skip link first (a pre-existing focus bug, fixed and covered by a test).
+4. Contact works without a mail client (Copy button), and section numbering makes sense on every route.
+5. Links shared on LinkedIn and in messages now get a preview card, and search engines get Person data.
+
+## Not done or not verified
+- Not tested on physical phones or in Safari/Firefox; all browser checks used Microsoft Edge (Chromium).
+- Lighthouse and field performance were not measured; the numbers above are bundle and font sizes.
+- Hosting behaviour (real 404 status, headers) can only be confirmed on a Vercel preview deployment.
+
+## Owner action items (not changed, by design)
+- **Role in the title.** `src/data/site.js:3` says "Full-Stack Developer"; the hero, JSON-LD and README say frontend. Pick one; the title feeds every search result and the sitemap entries.
+- **CSP.** `vercel.json` sets only `base-uri`, `object-src` and `frame-ancestors`. A `script-src`/`style-src` policy would need the inline theme bootstrap and the JSON-LD hashed, or moved to files, and then testing against Vercel Analytics.
+- **Font budget.** If the 117 kB of fonts matters more than optical sizing, swap `bricolage-grotesque-latin.woff2` for Fontsource's `wght` file (41 kB).
