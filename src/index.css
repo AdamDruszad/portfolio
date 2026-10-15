@@ -81,6 +81,7 @@
   --marker: rgb(242 212 74 / 0.85);
   --marker-solid: #f2d44a;
   --hard-shadow: #1b1c20;
+  --shot-shadow: 0 1px 0 rgb(27 28 32 / 0.04), 0 18px 36px -22px rgb(60 46 16 / 0.45);
   --paper-glass: rgb(244 241 232 / 0.92);
 
   /* Type: a fluid scale, nothing visible below 12px */
@@ -140,6 +141,7 @@
   --on-pen: #121318;
   --marker: rgb(242 212 74 / 0.34);
   --hard-shadow: #05060a;
+  --shot-shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 18px 36px -20px rgb(0 0 0 / 0.85);
   --paper-glass: rgb(18 19 24 / 0.92);
 }
 
@@ -535,6 +537,7 @@ main::before, .contact::before {
 .entry-rows__title { padding-bottom: var(--space-s); }
 .entry--row { display: grid; gap: var(--space-xs); padding-block: var(--space-m); border-top: 1px solid var(--rule); }
 .entry--row h3 { font-size: var(--step-2); }
+.entry--row .entry-figure { margin-top: var(--space-xs); }
 
 .all-projects-link {
   display: flex;
@@ -551,86 +554,41 @@ main::before, .contact::before {
 .all-projects-link:hover .arrow { transform: translate(2px, -2px); }
 
 /* ------------------------------------------------------------------------------------
-   Project illustrations — miniature, decorative versions of each project's interface.
-   The inner windows keep each project's own colours; the panels follow the theme.
+   Project screenshots — real captures of each app (public/projects/*.webp, 16:10).
+   The featured project adds its phone layout, overlapping the desktop screenshot.
    ------------------------------------------------------------------------------------ */
-.project-visual {
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-  color: var(--ink);
-  background-color: var(--paper-sunk);
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 24px 24px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-l);
+.shot { position: relative; }
+.shot__screen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top left;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shot-shadow);
+  transition: transform 300ms var(--ease-out);
 }
-.entry-figure:hover .fitai-window { transform: rotate(-1deg) translateY(-4px); }
-.entry-figure:hover .tts-preview { transform: rotate(0); }
-.entry-figure:hover .extensions-window { transform: rotate(0); }
-
-.project-visual--fitai { display: flex; justify-content: center; align-items: center; min-height: 18rem; padding: 4.5rem 1rem 1.5rem; }
-.fitai-wordmark { position: absolute; left: 1.5rem; top: 1.25rem; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.06em; line-height: 1.1; }
-.fitai-wordmark > span { margin-left: 10px; color: #e27048; font-size: 1.75rem; }
-.fitai-window { width: 100%; max-width: 32rem; background: #18191e; color: #f4f4f4; border: 1px solid #353831; border-radius: 9px; overflow: hidden; box-shadow: 0 24px 45px rgb(20 20 20 / 0.22); transform: rotate(-3deg); transition: transform 300ms var(--ease-out); }
-.preview-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #34363c; font-size: 8px; color: #a5aaa0; }
-.preview-toolbar > span:first-child { display: flex; gap: 4px; }
-.preview-toolbar i { width: 5px; height: 5px; background: #555952; border-radius: 50%; }
-.fitai-interface { display: grid; grid-template-columns: 1fr; }
-.fitai-sidebar { display: none; flex-direction: column; padding: 22px 12px 16px; border-right: 1px solid #303137; gap: 20px; font-size: 8px; color: #b2b4b6; }
-.fitai-sidebar b { font-size: 23px; color: white; margin-bottom: 6px; letter-spacing: -0.06em; }
-.fitai-sidebar b span, .fitai-sidebar .is-selected { color: #ef845e; }
-.fitai-sidebar small { margin-top: auto; color: #9c9d9f; font: 7px/1.7 var(--font-mono); }
-.fitai-dashboard { padding: 20px 16px; }
-.preview-eyebrow { margin: 0; color: #9b9e9f; font: 6px/1.5 var(--font-mono); letter-spacing: 0.14em; }
-.fitai-dashboard h4 { font-size: 22px; margin-top: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; font-weight: 600; letter-spacing: -0.04em; }
-.fitai-dashboard h4 > span { color: #ed8059; }
-.workout-preview { background: #34241f; border: 1px solid #6a3b2a; padding: 14px; border-radius: 6px; display: flex; flex-direction: column; }
-.workout-preview > span { color: #ef946e; font-size: 8px; }
-.workout-preview > strong { font-size: 19px; margin: 4px 0; font-weight: 600; }
-.workout-preview > small { font-size: 7px; color: #d5b5a8; }
-.workout-preview > div { background: #e27048; color: #191919; padding: 8px; margin-top: 14px; border-radius: 3px; display: flex; justify-content: space-between; font-size: 8px; font-weight: 700; }
-.preview-week-title { font-size: 8px; color: #b8b9bc; margin: 18px 0 4px; }
-.preview-workout-row { display: flex; align-items: center; padding-block: 10px; border-bottom: 1px solid #323338; gap: 12px; font-size: 8px; }
-.workout-day { color: #a1a3a6; font: 6px var(--font-mono); }
-.preview-workout-row > b { font-weight: 500; }
-.preview-workout-row > span:last-child { margin-left: auto; }
-
-.project-visual--tts { height: 14.5rem; padding: 1.25rem; }
-.soundwave { display: flex; align-items: center; justify-content: center; position: absolute; right: 20px; top: 38px; gap: 5px; height: 160px; transform: rotate(-10deg); }
-.soundwave > span { width: 7px; height: var(--bar-height); border-radius: 5px; background: var(--pen); opacity: 0.35; }
-.tts-title { position: relative; z-index: 1; font-size: 2.25rem; font-weight: 600; letter-spacing: -0.05em; line-height: 1.1; }
-.tts-preview { position: absolute; inset: auto 1.5rem 1.75rem; min-height: 5rem; display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--paper-raised); border: 1px solid var(--rule-strong); border-radius: var(--radius-m); box-shadow: 0 8px 16px rgb(27 28 32 / 0.08); transform: rotate(-3deg); transition: transform 250ms var(--ease-out); }
-.tts-play { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--marker-solid); font-size: 12px; padding-left: 2px; }
-.tts-preview > span:nth-child(2) { font-size: 13px; font-weight: 650; }
-.tts-preview > span:nth-child(2) > span { display: block; color: var(--graphite); font-size: 9px; font-weight: 400; margin-top: 4px; }
-.tts-duration { margin-left: auto; font-size: 20px; font-weight: 500; white-space: nowrap; }
-
-.project-visual--extensions { height: 14.5rem; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1.25rem; }
-.extensions-window { width: 100%; max-width: 26rem; transform: rotate(3deg); background: #12182b; color: #f4f5fa; border: 1px solid #1b2236; border-radius: 7px; padding: 15px; box-shadow: 0 12px 24px rgb(24 36 68 / 0.18); transition: transform 250ms var(--ease-out); }
-.extension-preview-header { display: flex; align-items: center; justify-content: space-between; background: #242b3c; padding: 10px; border-radius: 5px; font-size: 11px; }
-.extension-preview-header b > span { font-size: 18px; color: #ff7167; margin-right: 4px; }
-.extension-preview-header > span { color: #c4cada; }
-.extension-preview-filter { display: flex; align-items: center; justify-content: space-between; margin-block: 14px 10px; font-size: 9px; }
-.extension-preview-filter > span { background: #e7756b; color: #172033; padding: 3px 6px; border-radius: 10px; font-size: 7px; }
-.extension-preview-filter i { margin-left: 6px; font-style: normal; }
-.extension-preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.extension-preview-item { display: grid; grid-template-columns: 27px 1fr; background: #252c3f; border: 1px solid #3c4355; border-radius: 7px; padding: 10px 8px; gap: 12px 6px; }
-.extension-tile { width: 26px; height: 27px; display: grid; place-items: center; color: #202744; border-radius: 5px; font-size: 17px; }
-.extension-tile--mint { background: #c3ddc4; }
-.extension-tile--blue { background: #b5d3ed; }
-.extension-tile--pink { background: #edc4d5; }
-.extension-preview-item b { font-size: 8px; }
-.extension-preview-item p { margin: 2px 0 0; font-size: 6px; color: #c2c9d8; line-height: 1.5; }
-.extension-preview-item small { font-size: 6px; align-self: center; }
-.preview-toggle { background: #f4796e; width: 20px; height: 11px; padding: 2px; border-radius: 7px; justify-self: end; }
-.preview-toggle::after { content: ""; display: block; height: 7px; width: 7px; background: #fff; border-radius: 50%; margin-left: auto; }
-.preview-toggle.is-off { background: #727887; }
-.preview-toggle.is-off::after { margin-left: 0; }
-/* The illustrations' own headings must not pick up the page highlighter. */
-.project-visual em { background: none; animation: none; color: var(--pen); }
+.shot--featured { padding: 0 11% 8% 0; }
+.shot__phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 23%;
+  height: auto;
+  aspect-ratio: 480 / 1039;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shot-shadow);
+  transition: transform 300ms var(--ease-out);
+}
+@media (hover: hover) {
+  .entry-figure:hover .shot__screen { transform: translateY(-3px); }
+  .entry-figure:hover .shot__phone { transform: translateY(-6px); }
+}
 
 /* ------------------------------------------------------------------------------------
    Intro
@@ -773,12 +731,6 @@ main::before, .contact::before {
    Breakpoints — mobile first
    ------------------------------------------------------------------------------------ */
 @media (min-width: 480px) {
-  .fitai-interface { grid-template-columns: 26% 1fr; }
-  .fitai-sidebar { display: flex; }
-  .project-visual--fitai { padding-inline: 2rem; }
-}
-
-@media (min-width: 480px) {
   .hero-foot { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: var(--space-m); }
 }
 
@@ -843,9 +795,8 @@ main::before, .contact::before {
 
 @media (min-width: 1000px) {
   .entry-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xl); }
-  .entry--row { grid-template-columns: var(--margin-col) minmax(0, 0.9fr) minmax(0, 1.4fr); }
-  .entry--row > h3 { grid-column: 2; }
-  .entry--row > .entry-description, .entry--row > .entry-stack, .entry--row > .entry-links { grid-column: 3; }
+  .entry--row { grid-template-columns: var(--margin-col) minmax(0, 1fr) minmax(15rem, 18rem); }
+  .entry--row > .entry-figure { grid-column: 3; grid-row: 1 / span 4; align-self: start; }
   .intro-grid { grid-template-columns: var(--margin-col) minmax(0, 1.15fr) minmax(0, 1fr); }
   .intro-copy { grid-column: 3; }
   .about-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: start; }
@@ -859,8 +810,6 @@ main::before, .contact::before {
   .entry--featured { grid-template-columns: var(--margin-col) minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: start; }
   .entry--featured .entry-figure { grid-column: 3; }
   .entry--featured .entry-body { position: sticky; top: calc(var(--header-height) + var(--space-l)); }
-  .project-visual--fitai { min-height: 30rem; }
-  .project-visual--tts, .project-visual--extensions { height: 19rem; }
   .contact-arrow { width: 7rem; height: 7rem; }
   .contact-details { flex-direction: row; justify-content: space-between; align-items: flex-end; }
   .contact-details > p { text-align: right; }

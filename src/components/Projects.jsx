@@ -1,6 +1,6 @@
 import { githubRepositories } from "../data/profile";
 import { projectNumber, projects } from "../data/projects";
-import ProjectVisual from "./ProjectVisual";
+import ProjectShot from "./ProjectShot";
 import { ExternalLink, Note } from "./ui";
 
 function ProjectLinks({ project }) {
@@ -27,11 +27,11 @@ function Technologies({ project }) {
   );
 }
 
-function Figure({ project }) {
+function Figure({ project, variant }) {
   return (
-    <figure className="entry-figure">
-      <ProjectVisual kind={project.id} />
-      <figcaption>{project.visualCaption}</figcaption>
+    <figure className={`entry-figure entry-figure--${variant}`}>
+      <ProjectShot image={project.image} variant={variant} />
+      <figcaption>{project.image.caption}</figcaption>
     </figure>
   );
 }
@@ -69,13 +69,13 @@ export default function Projects() {
           <Technologies project={featured} />
           <ProjectLinks project={featured} />
         </div>
-        <Figure project={featured} />
+        <Figure project={featured} variant="featured" />
       </article>
 
       <div className="entry-cards">
         {cards.map((project, index) => (
           <article className="entry entry--card" key={project.id}>
-            <Figure project={project} />
+            <Figure project={project} variant="card" />
             <EntryMeta index={index + 1} project={project} />
             <h3>{project.title}</h3>
             <p className="entry-description">{project.description}</p>
@@ -94,6 +94,7 @@ export default function Projects() {
             <p className="entry-description">{project.description}</p>
             <Technologies project={project} />
             <ProjectLinks project={project} />
+            <Figure project={project} variant="row" />
           </article>
         ))}
       </div>
