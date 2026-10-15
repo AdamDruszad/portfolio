@@ -38,6 +38,13 @@ describe("portfolio navigation", () => {
     expect(container.querySelector("#projects h2").textContent).toBe("What I've built.");
   });
 
+  it("leaves focus at the document start on first load so Tab reaches the skip link", async () => {
+    await render("/");
+    expect(document.activeElement.id).not.toBe("main-content");
+    await click(navLink("About"));
+    expect(document.activeElement.id).toBe("main-content");
+  });
+
   it("Escape closes mobile navigation and returns focus to its toggle", async () => {
     await render("/");
     const toggle = container.querySelector('button[aria-controls="mobile-navigation"]');

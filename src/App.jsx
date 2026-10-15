@@ -24,7 +24,9 @@ function NavigationEffects() {
       target.focus({ preventScroll: true });
     } else {
       window.scrollTo({ top: 0, behavior: "instant" });
-      document.getElementById("main-content")?.focus({ preventScroll: true });
+      // The initial entry ("default" key) keeps focus at the document start, so the
+      // first Tab still reaches the skip link and the header.
+      if (key !== "default") document.getElementById("main-content")?.focus({ preventScroll: true });
     }
   }, [pathname, hash, key]);
   return null;
