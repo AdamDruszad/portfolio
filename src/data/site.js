@@ -1,6 +1,6 @@
 export const siteUrl = "https://portfolio-orpin-eight-240etcohnd.vercel.app";
 
-const siteTitle = "Biró Ádám — Full-Stack Developer";
+const siteTitle = "Biró Ádám — Frontend Developer";
 const pages = {
   "/": {
     title: siteTitle,
