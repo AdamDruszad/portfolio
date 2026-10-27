@@ -14,7 +14,7 @@ export const projects = [
     tech: ["React", "FastAPI", "PostgreSQL", "Claude API", "PWA"],
     source: "https://github.com/AdamDruszad/fitness-app",
     demo: "https://fitness-app-two-tawny.vercel.app",
-    demoNote: "Account required",
+    demoNote: "No sign-up needed: use “Try the demo” on the login page",
     image: {
       name: "fitai",
       caption: "Dashboard · sample data",
